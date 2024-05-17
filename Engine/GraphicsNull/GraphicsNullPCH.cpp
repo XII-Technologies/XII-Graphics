@@ -1,0 +1,32 @@
+#include <GraphicsNull/GraphicsNullPCH.h>
+
+XII_STATICLINK_LIBRARY(GraphicsNull)
+{
+  if (bReturn)
+    return;
+
+  XII_STATICLINK_REFERENCE(GraphicsNull_CommandEncoder_Implementation_CommandEncoderNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_CommandEncoder_Implementation_CommandListNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_CommandEncoder_Implementation_CommandQueueNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Device_Implementation_DeviceNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Device_Implementation_PassNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Device_Implementation_SwapChainNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_BottomLevelASNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_BufferNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_BufferViewNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_FenceNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_FramebufferNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_QueryNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_RenderPassNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_SamplerNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_TextureNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_TextureViewNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Resources_Implementation_TopLevelASNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Shader_Implementation_InputLayoutNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Shader_Implementation_ShaderNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_Shader_Implementation_ShaderResourceVariableNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_States_Implementation_BlendStateNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_States_Implementation_DepthStencilStateNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_States_Implementation_PipelineStateNull);
+  XII_STATICLINK_REFERENCE(GraphicsNull_States_Implementation_RasterizerStateNull);
+}
