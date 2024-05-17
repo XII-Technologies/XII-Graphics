@@ -3,7 +3,6 @@
 #include <GraphicsFoundation/Shader/InputLayout.h>
 
 // clang-format off
-
 XII_BEGIN_STATIC_REFLECTED_ENUM(xiiGALInputElementFrequency, 1)
   XII_ENUM_CONSTANT(xiiGALInputElementFrequency::Undefined),
   XII_ENUM_CONSTANT(xiiGALInputElementFrequency::PerVertex),
@@ -42,7 +41,6 @@ XII_END_STATIC_REFLECTED_ENUM;
 
 XII_BEGIN_DYNAMIC_REFLECTED_TYPE(xiiGALInputLayout, 1, xiiRTTINoAllocator)
 XII_END_DYNAMIC_REFLECTED_TYPE;
-
 // clang-format on
 
 xiiGALInputLayout::xiiGALInputLayout(xiiGALDevice* pDevice, const xiiGALInputLayoutCreationDescription& creationDescription) :

@@ -51,7 +51,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALTopLevelASCreationDescription : public x
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView                             m_sName;                                                       ///< Resource name. The default is an empty string view.
   xiiUInt32                                 m_uiMaxInstanceCount     = 0U;                                 ///< The allocated size for the specified number of instances. The default is 0.
   xiiBitflags<xiiGALRayTracingBuildASFlags> m_Flags                  = xiiGALRayTracingBuildASFlags::None; ///< The ray tracing build flags. The default is None.
   xiiUInt64                                 m_uiCompactedSize        = 0U;                                 ///< The size returned when writing the TLAS compacted size, if the acceleration structure is going to be the target of a compacted copy command. The default is 0.

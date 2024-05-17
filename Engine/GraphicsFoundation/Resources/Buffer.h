@@ -54,7 +54,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALBufferCreationDescription : public xiiHa
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView                      m_sName;                                                 ///< Resource name. The default is an empty string view.
   xiiUInt64                          m_uiSize                 = 0U;                           ///< The size of the buffer in bytes. For a uniform (constant) buffer, this must be a multiple of 16. The default is 0.
   xiiBitflags<xiiGALBindFlags>       m_BindFlags              = xiiGALBindFlags::None;        ///< The bind flags. Allowed flags are Vertex, Index, Uniform (Constant), Shader Resource, Stream Output, Unordered Access, Indirect Draw Args, Ray Tracing. Allowed flags for sparse resources are stored in the allowed sparse resource properties. The default is None.
   xiiEnum<xiiGALResourceUsage>       m_ResourceUsage          = xiiGALResourceUsage::Default; ///< The resource usage. The default is Default.

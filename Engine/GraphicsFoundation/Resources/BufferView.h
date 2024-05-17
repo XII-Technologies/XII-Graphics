@@ -20,7 +20,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALBufferViewCreationDescription : public x
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView                 m_sName;                                      ///< Resource name. The default is an empty string view.
   xiiGALBufferHandle            m_hBuffer;                                    ///< The handle to the buffer of which the view is created.
   xiiEnum<xiiGALBufferViewType> m_ViewType = xiiGALBufferViewType::Undefined; ///< The view type. The default is Undefined.
   xiiGALBufferFormat            m_Format;                                     ///< The format of the view. This member is only used for formatted and raw buffers. To create raw view of a raw buffer, set Format.ValueType member to Undefined (default value).

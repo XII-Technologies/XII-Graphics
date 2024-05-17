@@ -67,7 +67,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALQueryCreationDescription : public xiiHas
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView            m_sName;                             ///< Resource name. The default is an empty string view.
   xiiEnum<xiiGALQueryType> m_Type = xiiGALQueryType::Undefined; ///< Query type.
 };
 

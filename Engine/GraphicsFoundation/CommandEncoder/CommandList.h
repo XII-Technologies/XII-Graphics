@@ -58,7 +58,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALCommandListCreationDescription : public 
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView                       m_sName;                                       ///< Resource name. The default is an empty string view.
   xiiBitflags<xiiGALCommandQueueType> m_QueueType = xiiGALCommandQueueType::Unknown; ///< The command queue type that this command list uses.
 };
 

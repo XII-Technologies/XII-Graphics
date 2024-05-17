@@ -144,7 +144,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALPipelineStateCreationDescription : publi
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView                         m_sName;                                       ///< Resource name. The default is an empty string view.
   xiiEnum<xiiGALPipelineType>           m_PipelineType = xiiGALPipelineType::Graphics; ///< The pipeline type. The default is xiiGALPipelineType::Graphics.
   xiiGALPipelineResourceSignatureHandle m_hPipelineResourceSignature;                  ///< The pipeline resource signature that contains the shader resource description.
   xiiGALShaderHandle                    m_hShader;                                     ///< The shader that contains the valid shader code for the specified pipeline type.

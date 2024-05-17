@@ -98,7 +98,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALTextureViewCreationDescription : public 
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView                               m_sName;                                                                   ///< Resource name. The default is an empty string view.
   xiiGALTextureHandle                         m_hTexture;                                                                ///< The handle to the texture of which the view is created.
   xiiEnum<xiiGALTextureViewType>              m_ViewType                  = xiiGALTextureViewType::Undefined;            ///< Describes the texture view type. The default is Undefined.
   xiiEnum<xiiGALResourceDimension>            m_ResourceDimension         = xiiGALResourceDimension::Undefined;          ///< The view interpretation of the original texture. If default value xiiGALResourceDimension::Undefined is provided, the view type will match the type of the referenced texture.

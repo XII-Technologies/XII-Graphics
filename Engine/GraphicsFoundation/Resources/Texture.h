@@ -48,7 +48,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALTextureCreationDescription : public xiiH
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView                       m_sName;                                                   ///< Resource name. The default is an empty string view.
   xiiEnum<xiiGALResourceDimension>    m_Type               = xiiGALResourceDimension::Undefined; ///< Texture type. The default is Undefined.
   xiiSizeU32                          m_Size               = xiiSizeU32(0, 0);                   ///< Texture width and height in pixels. The default is (0, 0).
   xiiUInt32                           m_uiArraySizeOrDepth = 1U;                                 ///< For a 1D Array or 2D Array, the number of array slices. For a 3D texture, the number of depth slices. The default is 1.

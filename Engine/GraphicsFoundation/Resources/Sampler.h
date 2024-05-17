@@ -43,7 +43,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALSamplerCreationDescription : public xiiH
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView                     m_sName;                                                ///< Resource name. The default is an empty string view.
   xiiEnum<xiiGALFilterType>         m_MinFilter          = xiiGALFilterType::Linear;        ///< Texture minification filter. The default is Linear.
   xiiEnum<xiiGALFilterType>         m_MagFilter          = xiiGALFilterType::Linear;        ///< Texture magnification filter. The default is Linear.
   xiiEnum<xiiGALFilterType>         m_MipFilter          = xiiGALFilterType::Linear;        ///< Texture mip filter. The default is Linear.

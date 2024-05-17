@@ -77,7 +77,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALPipelineResourceDescription : public xii
 /// \brief This describes the pipeline resource signature creation description.
 struct XII_GRAPHICSFOUNDATION_DLL xiiGALPipelineResourceSignatureCreationDescription : public xiiHashableStruct<xiiGALPipelineResourceSignatureCreationDescription>
 {
-  xiiStringView                                         m_sName;                                        ///< Resource name. The default is an empty string view.
   xiiUInt8                                              m_uiBindingIndex = 0U;                          ///< The binding index that this resource signature uses. Every resource signature must be assign to one signature slot. The total number of slots is given by XII_GAL_MAX_RESOURCE_SIGNATURES_COUNT constant. All resource signatures used by a pipeline state must be assigned to different slots.
   xiiHybridArray<xiiGALPipelineResourceDescription, 2U> m_Resources;                                    ///< An array of resource descriptions, see xiiGALPipelineResourceDescription for details.
   xiiHybridArray<xiiGALImmutableSamplerDescription, 2U> m_ImmutableSamplers;                            ///< An array of immutable samplers, see xiiGALImmutableSamplerDescription for details.

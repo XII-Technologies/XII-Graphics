@@ -14,7 +14,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALShaderCreationDescription : public xiiHa
 
   bool HasByteCodeForStage(xiiGALShaderStage::Enum stage) const;
 
-  xiiStringView                  m_sName;                                                    ///< Resource name. The default is an empty string view.
   xiiBitflags<xiiGALShaderStage> m_ShaderStage                 = xiiGALShaderStage::Unknown; ///< The shader stages. The default is xiiGALShaderStage::Unknown.
   bool                           m_bUseCombinedTextureSamplers = false;                      ///< If set to true, textures will be combined with texture samplers.
                                                                                              ///<

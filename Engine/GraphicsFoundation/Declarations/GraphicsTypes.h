@@ -874,7 +874,7 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALQueryType
   enum Enum : StorageType
   {
     Undefined = 0U,     ///< The query type is undefined.
-    Occlusion,          ///< Number of samples that passed the depth and stencil test between begin and end (on a context).
+    Occlusion,          ///< Number of samples that passed the depth and stencil test between begin and end (on a comand list).
     BinaryOcclusion,    ///< Acts like Occlusion. Returns true if at least one sample passed.
     Timestamp,          ///< Requests the GPU timestamp, similar to an EndQuery call.
     PipelineStatistics, ///< Gets the pipeline statistics such as the number of pixel shader invocations.

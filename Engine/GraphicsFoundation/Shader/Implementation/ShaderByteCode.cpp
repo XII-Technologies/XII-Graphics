@@ -4,7 +4,6 @@
 #include <GraphicsFoundation/Shader/Types.h>
 
 // clang-format off
-
 XII_BEGIN_STATIC_REFLECTED_ENUM(xiiGALShaderResourceType, 1)
   XII_ENUM_CONSTANT(xiiGALShaderResourceType::Unknown),
   XII_ENUM_CONSTANT(xiiGALShaderResourceType::ConstantBuffer),
@@ -65,7 +64,6 @@ XII_END_STATIC_REFLECTED_ENUM;
 
 XII_BEGIN_DYNAMIC_REFLECTED_TYPE(xiiGALShaderByteCode, 1, xiiRTTINoAllocator)
 XII_END_DYNAMIC_REFLECTED_TYPE;
-
 // clang-format on
 
 void xiiGALShaderVariableDescription::CopyDataFormVariant(xiiUInt8* pDestination, xiiVariant* pValue, const xiiGALShaderVariableDescription& description)

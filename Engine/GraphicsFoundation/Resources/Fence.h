@@ -27,7 +27,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALFenceCreationDescription : public xiiHas
 {
   XII_DECLARE_POD_TYPE();
 
-  xiiStringView            m_sName;                               ///< Resource name. The default is an empty string view.
   xiiEnum<xiiGALFenceType> m_Type = xiiGALFenceType::CpuWaitOnly; ///< The fence type.
 };
 

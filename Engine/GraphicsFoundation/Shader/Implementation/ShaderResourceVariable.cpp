@@ -1,11 +1,8 @@
-#pragma once
-
-#include <GraphicsFoundation/GraphicsFoundationDLL.h>
+#include <GraphicsFoundation/GraphicsFoundationPCH.h>
 
 #include <GraphicsFoundation/Shader/ShaderResourceVariable.h>
 
 // clang-format off
-
 XII_BEGIN_STATIC_REFLECTED_ENUM(xiiGALShaderResourceVariableType, 1)
   XII_ENUM_CONSTANT(xiiGALShaderResourceVariableType::Static),
   XII_ENUM_CONSTANT(xiiGALShaderResourceVariableType::Mutable),
@@ -37,7 +34,6 @@ XII_END_STATIC_REFLECTED_BITFLAGS;
 
 XII_BEGIN_DYNAMIC_REFLECTED_TYPE(xiiGALShaderResourceVariable, 1, xiiRTTINoAllocator)
 XII_END_DYNAMIC_REFLECTED_TYPE;
-
 // clang-format on
 
 xiiGALShaderResourceVariable::xiiGALShaderResourceVariable() :

@@ -67,7 +67,6 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALBLASBoundingBoxDescription : public xiiH
 /// \brief This describes bottom level acceleration structure creation description.
 struct XII_GRAPHICSFOUNDATION_DLL xiiGALBottomLevelASCreationDescription : public xiiHashableStruct<xiiGALBottomLevelASCreationDescription>
 {
-  xiiStringView                                         m_sName;                                                       ///< Resource name. The default is an empty string view.
   xiiHybridArray<xiiGALBLASTriangleDescription, 16U>    m_Triangles;                                                   ///< Array of triangle geometry descriptions.
   xiiHybridArray<xiiGALBLASBoundingBoxDescription, 16U> m_BoundingBoxes;                                               ///< Array of AABB geometry descriptions.
   xiiBitflags<xiiGALRayTracingBuildASFlags>             m_BuildASFlags           = xiiGALRayTracingBuildASFlags::None; ///< Ray tracing build flags. The default is None.
