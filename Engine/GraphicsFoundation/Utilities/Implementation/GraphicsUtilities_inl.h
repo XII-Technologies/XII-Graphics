@@ -90,3 +90,86 @@ XII_ALWAYS_INLINE xiiUInt32 xiiGALGraphicsUtilities::GetMipSize(xiiUInt32 uiSize
   }
   return xiiMath::Max(1U, uiSize);
 }
+
+XII_ALWAYS_INLINE xiiGALTextureCreationDescription xiiGALGraphicsUtilities::GetDefaultTexture1DDescription() noexcept
+{
+  return xiiGALTextureCreationDescription{
+    .m_Type               = xiiGALResourceDimension::Texture1D,
+    .m_Size               = xiiSizeU32(0, 0),
+    .m_uiArraySizeOrDepth = 1U,
+    .m_Format             = xiiGALTextureFormat::Unknown,
+    .m_uiMipLevels        = 1U,
+    .m_uiSampleCount      = xiiGALMSAASampleCount::OneSample,
+    .m_BindFlags          = xiiGALBindFlags::ShaderResource,
+    .m_CPUAccessFlags     = xiiGALCPUAccessFlag::None,
+    .m_MiscFlags          = xiiGALMiscTextureFlags::None,
+  };
+}
+
+XII_ALWAYS_INLINE xiiGALTextureCreationDescription xiiGALGraphicsUtilities::GetDefaultTexture2DDescription() noexcept
+{
+  return xiiGALTextureCreationDescription{
+    .m_Type               = xiiGALResourceDimension::Texture2D,
+    .m_Size               = xiiSizeU32(0, 0),
+    .m_uiArraySizeOrDepth = 1U,
+    .m_Format             = xiiGALTextureFormat::Unknown,
+    .m_uiMipLevels        = 1U,
+    .m_uiSampleCount      = xiiGALMSAASampleCount::OneSample,
+    .m_BindFlags          = xiiGALBindFlags::ShaderResource,
+    .m_Usage              = xiiGALResourceUsage::Immutable,
+    .m_CPUAccessFlags     = xiiGALCPUAccessFlag::None,
+    .m_MiscFlags          = xiiGALMiscTextureFlags::None,
+  };
+}
+
+XII_ALWAYS_INLINE xiiGALTextureCreationDescription xiiGALGraphicsUtilities::GetDefaultTexture3DDescription() noexcept
+{
+  return xiiGALTextureCreationDescription{
+    .m_Type               = xiiGALResourceDimension::Texture3D,
+    .m_Size               = xiiSizeU32(0, 0),
+    .m_uiArraySizeOrDepth = 1U,
+    .m_Format             = xiiGALTextureFormat::Unknown,
+    .m_uiMipLevels        = 1U,
+    .m_uiSampleCount      = xiiGALMSAASampleCount::OneSample,
+    .m_BindFlags          = xiiGALBindFlags::ShaderResource,
+    .m_Usage              = xiiGALResourceUsage::Immutable,
+    .m_CPUAccessFlags     = xiiGALCPUAccessFlag::None,
+    .m_MiscFlags          = xiiGALMiscTextureFlags::None,
+  };
+}
+
+XII_ALWAYS_INLINE xiiGALTextureCreationDescription xiiGALGraphicsUtilities::GetDefaultTextureCubeDescription() noexcept
+{
+  return xiiGALTextureCreationDescription{
+    .m_Type               = xiiGALResourceDimension::TextureCube,
+    .m_Size               = xiiSizeU32(0, 0),
+    .m_uiArraySizeOrDepth = 6U,
+    .m_Format             = xiiGALTextureFormat::Unknown,
+    .m_uiMipLevels        = 1U,
+    .m_uiSampleCount      = xiiGALMSAASampleCount::OneSample,
+    .m_BindFlags          = xiiGALBindFlags::ShaderResource,
+    .m_Usage              = xiiGALResourceUsage::Immutable,
+    .m_CPUAccessFlags     = xiiGALCPUAccessFlag::None,
+    .m_MiscFlags          = xiiGALMiscTextureFlags::None,
+  };
+}
+
+XII_ALWAYS_INLINE xiiGALSamplerCreationDescription xiiGALGraphicsUtilities::GetDefaultSamplerDescription() noexcept
+{
+  return xiiGALSamplerCreationDescription{
+    .m_MinFilter          = xiiGALFilterType::Linear,
+    .m_MagFilter          = xiiGALFilterType::Linear,
+    .m_MipFilter          = xiiGALFilterType::Linear,
+    .m_AddressU           = xiiGALTextureAddressMode::Clamp,
+    .m_AddressV           = xiiGALTextureAddressMode::Clamp,
+    .m_AddressW           = xiiGALTextureAddressMode::Clamp,
+    .m_Flags              = xiiGALSamplerFlags::None,
+    .m_bUnormalizedCoords = false,
+    .m_fMipLODBias        = 0.0f,
+    .m_uiMaxAnisotropy    = 4,
+    .m_ComparisonFunction = xiiGALComparisonFunction::Never,
+    .m_BorderColor        = xiiColor::Black,
+    .m_fMinLOD            = -1.0f,
+    .m_fMaxLOD            = 4200.0f,
+  };
+}

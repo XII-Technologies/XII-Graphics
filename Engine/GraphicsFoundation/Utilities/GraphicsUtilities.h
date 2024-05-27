@@ -3,6 +3,7 @@
 #include <GraphicsFoundation/GraphicsFoundationDLL.h>
 
 #include <GraphicsFoundation/Declarations/Descriptors.h>
+#include <GraphicsFoundation/Resources/Sampler.h>
 #include <GraphicsFoundation/Resources/Texture.h>
 #include <GraphicsFoundation/States/PipelineResourceSignature.h>
 
@@ -42,6 +43,21 @@ public:
   /// \param viewType  - The view type to be created.
   /// \param bindFlags - The texture bind flags.
   static XII_NODISCARD xiiEnum<xiiGALTextureFormat> GetDefaultTextureViewFormat(xiiEnum<xiiGALTextureFormat> format, xiiEnum<xiiGALTextureViewType> viewType, xiiBitflags<xiiGALBindFlags> bindFlags);
+
+  /// \brief Returns the default texture 1D creation description.
+  static XII_NODISCARD xiiGALTextureCreationDescription GetDefaultTexture1DDescription() noexcept;
+
+  /// \brief Returns the default texture 2D creation description.
+  static XII_NODISCARD xiiGALTextureCreationDescription GetDefaultTexture2DDescription() noexcept;
+
+  /// \brief Returns the default texture 3D creation description.
+  static XII_NODISCARD xiiGALTextureCreationDescription GetDefaultTexture3DDescription() noexcept;
+
+  /// \brief Returns the default texture cube creation description.
+  static XII_NODISCARD xiiGALTextureCreationDescription GetDefaultTextureCubeDescription() noexcept;
+
+  /// \brief Returns the default sampler creation description.
+  static XII_NODISCARD xiiGALSamplerCreationDescription GetDefaultSamplerDescription() noexcept;
 };
 
 #include <GraphicsFoundation/Utilities/Implementation/GraphicsUtilities_inl.h>
