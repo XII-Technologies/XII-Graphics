@@ -105,14 +105,14 @@ public:
   /// \param pViewports           - The array of viewports structures, describing the viewports to bind.
   /// \param uiRenderTargetWidth  - The width of the render target. If 0 is provided, width of the currently bound render target will be used.
   /// \param uiRenderTargetHeight - The height of the render target. If 0 is provided, height of the currently bound render target will be used.
-  void SetViewports(xiiArrayPtr<xiiGALViewport> pViewports, xiiUInt32 uiRenderTargetWidth, xiiUInt32 uiRenderTargetHeight);
+  void SetViewports(xiiArrayPtr<xiiGALViewport> pViewports, xiiUInt32 uiRenderTargetWidth = 0U, xiiUInt32 uiRenderTargetHeight = 0U);
 
   /// \brief Sets the scissor rectangles used in the rasterizer stage. This defines the area of the render target to which the rasterizer will clip.
   ///
   /// \param pRects               - The array of rectangle structures, describing the scissor rectangles to bind.
   /// \param uiRenderTargetWidth  - The width of the render target. If 0 is provided, width of the currently bound render target will be used.
   /// \param uiRenderTargetHeight - The height of the render target. If 0 is provided, height of the currently bound render target will be used.
-  void SetScissorRects(xiiArrayPtr<xiiRectU32> pRects, xiiUInt32 uiRenderTargetWidth, xiiUInt32 uiRenderTargetHeight);
+  void SetScissorRects(xiiArrayPtr<xiiRectU32> pRects, xiiUInt32 uiRenderTargetWidth = 0U, xiiUInt32 uiRenderTargetHeight = 0U);
 
   /// \brief Sets the index buffer for the input-assembler stage of the pipeline. This contains the indices into the vertex buffers.
   ///

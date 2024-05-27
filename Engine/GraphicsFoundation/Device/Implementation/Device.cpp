@@ -807,7 +807,7 @@ xiiGALBufferHandle xiiGALDevice::CreateBuffer(const xiiGALBufferCreationDescript
 
   if (description.m_ResourceUsage == xiiGALResourceUsage::Immutable && !bHasInitialData)
   {
-    XII_VERIFY_BUFFER(false, "The initial data must not be nullptr, as immutable buffers must be initialized at creation.");
+    XII_VERIFY_BUFFER(false, "The initial data must not be nullptr, as immutable buffers must be initialized at creation time.");
   }
   if (description.m_ResourceUsage == xiiGALResourceUsage::Dynamic && bHasInitialData)
   {

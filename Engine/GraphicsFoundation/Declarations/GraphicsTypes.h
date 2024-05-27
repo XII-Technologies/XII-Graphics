@@ -562,13 +562,13 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALTextureFormat
   };
 
   /// \brief Returns whether the given texture format is a depth format.
-  static bool IsDepthFormat(xiiEnum<xiiGALTextureFormat> format);
+  static bool IsDepthFormat(xiiGALTextureFormat::Enum format);
 
   /// \brief Returns whether the given texture format is a stencil format
-  static bool IsStencilFormat(xiiEnum<xiiGALTextureFormat> format);
+  static bool IsStencilFormat(xiiGALTextureFormat::Enum format);
 
   /// \brief Returns whether the given texture format is a sRGB format.
-  static bool IsSrgb(xiiEnum<xiiGALTextureFormat> format);
+  static bool IsSrgb(xiiGALTextureFormat::Enum format);
 };
 
 XII_DECLARE_REFLECTABLE_TYPE(XII_GRAPHICSFOUNDATION_DLL, xiiGALTextureFormat);
@@ -602,8 +602,8 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALFilterType
     Default = Unknown
   };
 
-  static bool IsComparisonFilter(xiiEnum<xiiGALFilterType> e);
-  static bool IsAnisotropicFilter(xiiEnum<xiiGALFilterType> e);
+  static bool IsComparisonFilter(xiiGALFilterType::Enum e);
+  static bool IsAnisotropicFilter(xiiGALFilterType::Enum e);
 };
 
 XII_DECLARE_REFLECTABLE_TYPE(XII_GRAPHICSFOUNDATION_DLL, xiiGALFilterType);
@@ -718,7 +718,7 @@ struct XII_GRAPHICSFOUNDATION_DLL xiiGALPrimitiveTopology
     Default = Undefined
   };
 
-  static xiiUInt32 VerticesPerPrimitive(xiiEnum<xiiGALPrimitiveTopology> e);
+  static xiiUInt32 VerticesPerPrimitive(xiiGALPrimitiveTopology::Enum e);
 
   static const char* Names[ENUM_COUNT];
 };

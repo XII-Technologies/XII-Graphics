@@ -39,7 +39,6 @@ xiiResult xiiGALSwapChainNull::CreateBackBufferInternal(xiiGALDeviceNull* pDevic
   xiiEnum<xiiGALTextureFormat> textureFormat = pDeviceNull->GetDescription().m_GraphicsDeviceType != xiiGALGraphicsDeviceType::Vulkan ? xiiGALTextureFormat::RGBA8UNormalizedSRGB : xiiGALTextureFormat::BGRA8UNormalizedSRGB;
 
   xiiGALTextureCreationDescription textureDescription;
-  textureDescription.m_sName              = "SwapChain Null Render Target.";
   textureDescription.m_Type               = xiiGALResourceDimension::Texture2D;
   textureDescription.m_Size               = m_Description.m_pWindow->GetClientAreaSize();
   textureDescription.m_uiArraySizeOrDepth = 1U;
@@ -61,6 +60,8 @@ xiiResult xiiGALSwapChainNull::CreateBackBufferInternal(xiiGALDeviceNull* pDevic
 
   m_hBackBufferTexture = pDeviceNull->CreateTexture(textureDescription);
   XII_ASSERT_RELEASE(!m_hBackBufferTexture.IsInvalidated(), "Couldn't create native backbuffer texture object!");
+
+  pDeviceNull->GetTexture(m_hBackBufferTexture)->SetDebugName("SwapChain Null Render Target.");
 
   m_Description.m_Resolution = textureDescription.m_Size;
 

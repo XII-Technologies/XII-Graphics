@@ -31,8 +31,8 @@ void xiiGALTexture::CreateDefaultResourceViews(xiiGALTextureHandle hTexture)
   viewDescription.m_hTexture                  = hTexture;
   viewDescription.m_uiMostDetailedMip         = 0U;
   viewDescription.m_uiFirstArrayOrDepthSlice  = 0U;
-  viewDescription.m_uiMipLevelCount           = 0U;
-  viewDescription.m_uiArrayOrDepthSlicesCount = 0U;
+  viewDescription.m_uiMipLevelCount           = m_Description.m_uiMipLevels;
+  viewDescription.m_uiArrayOrDepthSlicesCount = m_Description.GetArraySize();
 
   // Allow viewDescription.m_Format and viewDescription.m_ResourceDimension to be determined by the device.
 

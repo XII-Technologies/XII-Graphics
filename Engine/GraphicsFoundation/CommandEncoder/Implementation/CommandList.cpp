@@ -551,7 +551,7 @@ void xiiGALCommandList::UpdateBufferExtended(xiiGALBufferHandle hBuffer, xiiUInt
   XII_VERIFY_COMMAND_LIST(uiDestinationOffset < bufferDescription.m_uiSize, "UpdateBufferExtended command arguments are invalid. Unable to update buffer '{0}', the destination offset ({1}) exceeds the buffer size ({2}).", pBuffer->GetDebugName(), uiDestinationOffset, bufferDescription.m_uiSize);
   XII_VERIFY_COMMAND_LIST((uiDestinationOffset + pSourceData.GetCount()) <= bufferDescription.m_uiSize, "UpdateBufferExtended command arguments are invalid. Unable to update buffer '{0}', the update region [{1}, {2}) is out of buffer bounds [0, {3}).", pBuffer->GetDebugName(), uiDestinationOffset, uiDestinationOffset + pSourceData.GetCount(), bufferDescription.m_uiSize);
 
-  UpdateBufferExtendedPlatform(pBuffer, uiDestinationOffset, pSourceData, mapFlags, bCopyToTemporaryStorage /*|| mapFlags == xiiGALMapFlags::NoOverWrite*/);
+  UpdateBufferExtendedPlatform(pBuffer, uiDestinationOffset, pSourceData, mapFlags, bCopyToTemporaryStorage || mapFlags == xiiGALMapFlags::NoOverWrite);
 }
 
 void xiiGALCommandList::CopyBuffer(xiiGALBufferHandle hSourceBuffer, xiiGALBufferHandle hDestinationBuffer)

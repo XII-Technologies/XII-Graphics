@@ -112,37 +112,37 @@ XII_ALWAYS_INLINE xiiGALShaderStage::Enum xiiGALShaderStage::GetStageFlag(xiiUIn
 }
 
 // static
-XII_FORCE_INLINE bool xiiGALTextureFormat::IsDepthFormat(xiiEnum<xiiGALTextureFormat> format)
+XII_FORCE_INLINE bool xiiGALTextureFormat::IsDepthFormat(xiiGALTextureFormat::Enum format)
 {
   return format == D16UNormalized || format == D24UNormalizedS8UInt || format == D32Float || format == D32FloatS8X24UInt;
 }
 
 // static
-XII_FORCE_INLINE bool xiiGALTextureFormat::IsStencilFormat(xiiEnum<xiiGALTextureFormat> format)
+XII_FORCE_INLINE bool xiiGALTextureFormat::IsStencilFormat(xiiGALTextureFormat::Enum format)
 {
   return format == D24UNormalizedS8UInt || format == D32FloatS8X24UInt;
 }
 
 // static
-XII_FORCE_INLINE bool xiiGALTextureFormat::IsSrgb(xiiEnum<xiiGALTextureFormat> format)
+XII_FORCE_INLINE bool xiiGALTextureFormat::IsSrgb(xiiGALTextureFormat::Enum format)
 {
   return format == RGBA8UNormalizedSRGB || format == BGRX8UNormalizedSRGB || format == BGRA8UNormalizedSRGB || format == BC1UNormalizedSRGB || format == BC2UNormalizedSRGB || format == BC3UNormalizedSRGB || format == BC7UNormalizedSRGB;
 }
 
 // static
-XII_FORCE_INLINE bool xiiGALFilterType::IsComparisonFilter(xiiEnum<xiiGALFilterType> e)
+XII_FORCE_INLINE bool xiiGALFilterType::IsComparisonFilter(xiiGALFilterType::Enum e)
 {
   return e == ComparisonPoint || e == ComparisonLinear || e == ComparisonAnisotropic;
 }
 
 // static
-XII_FORCE_INLINE bool xiiGALFilterType::IsAnisotropicFilter(xiiEnum<xiiGALFilterType> e)
+XII_FORCE_INLINE bool xiiGALFilterType::IsAnisotropicFilter(xiiGALFilterType::Enum e)
 {
   return e == Anisotropic || e == ComparisonAnisotropic || e == MinimumAnisotropic || e == MaximumAnisotropic;
 }
 
 // static
-XII_ALWAYS_INLINE xiiUInt32 xiiGALPrimitiveTopology::VerticesPerPrimitive(xiiEnum<xiiGALPrimitiveTopology> e)
+XII_ALWAYS_INLINE xiiUInt32 xiiGALPrimitiveTopology::VerticesPerPrimitive(xiiGALPrimitiveTopology::Enum e)
 {
   switch (e)
   {
