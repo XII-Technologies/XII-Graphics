@@ -97,6 +97,8 @@ xiiResult xiiGALSwapChainD3D11::CreateDXGISwapChain()
   m_DesiredSurfaceTransform    = xiiGALSurfaceTransform::Optimal;
   m_Description.m_PreTransform = xiiGALSurfaceTransform::Identity;
 
+  m_uiMaximumFrameLatency = m_Description.m_uiBufferCount;
+
   HWND hNativeWindow = xiiMinWindows::ToNative(m_Description.m_pWindow->GetNativeWindowHandle());
 
 #if XII_ENABLED(XII_PLATFORM_WINDOWS_DESKTOP)
@@ -144,6 +146,7 @@ xiiResult xiiGALSwapChainD3D11::CreateDXGISwapChain()
 
     default:
       swapChainDescription.Format = dxgiColorBufferFormat;
+      break;
   }
 
   XII_ASSERT_DEV(!m_Description.m_Usage.IsNoFlagSet(), "No swap chain usage flags are set!");
@@ -182,6 +185,14 @@ xiiResult xiiGALSwapChainD3D11::CreateDXGISwapChain()
   // Create DXGI Factory.
   IDXGIFactory4* pDXGIFactory = pDeviceD3D11->GetDXGIFactory();
 
+  // DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT enables querying a waitable object that can be
+  // used to synchronize presentation with CPU timeline.
+  // The flag is not supported in D3D11 fullscreen mode.
+  if (!m_FullScreenMode.m_bIsFullScreen)
+  {
+    swapChainDescription.Flags |= DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
+  }
+
 #if XII_ENABLED(XII_PLATFORM_WINDOWS_DESKTOP)
   DXGI_SWAP_CHAIN_FULLSCREEN_DESC fullScreenDescription = {};
 
@@ -209,8 +220,7 @@ xiiResult xiiGALSwapChainD3D11::CreateDXGISwapChain()
   }
 
   {
-    // This is silly, but IDXGIFactory used for MakeWindowAssociation must be retrieved via
-    // calling IDXGISwapchain::GetParent first, otherwise it won't work
+    // The IDXGIFactory used for MakeWindowAssociation must be retrieved via calling IDXGISwapchain::GetParent first, otherwise it won't work.
     // https://www.gamedev.net/forums/topic/634235-dxgidisabling-altenter/?do=findComment&comment=4999990
     IDXGIFactory1* pFactoryFromSC = nullptr;
     XII_SCOPE_EXIT(XII_GAL_D3D11_RELEASE(pFactoryFromSC));
@@ -239,6 +249,22 @@ xiiResult xiiGALSwapChainD3D11::CreateDXGISwapChain()
     xiiLog::Error("Failed to retrieve IDXGISwapChain4 from DXGI interface.");
     return XII_FAILURE;
   }
+
+  if ((swapChainDescription.Flags & DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT) != 0)
+  {
+    // IMPORTANT: SetMaximumFrameLatency must be called BEFORE GetFrameLatencyWaitableObject!
+    m_pSwapChain->SetMaximumFrameLatency(m_uiMaximumFrameLatency);
+
+    m_FrameLatencyWaitableObject = m_pSwapChain->GetFrameLatencyWaitableObject();
+
+    XII_ASSERT_DEV(m_FrameLatencyWaitableObject != NULL, "The DXGI Swapchain waitable object must not be null.");
+  }
+  else
+  {
+    m_FrameLatencyWaitableObject = NULL;
+    m_uiMaximumFrameLatency      = 0U;
+  }
+
   return XII_SUCCESS;
 }
 
@@ -246,8 +272,7 @@ xiiResult xiiGALSwapChainD3D11::UpdateSwapChain(bool bCreateNew)
 {
   xiiGALDeviceD3D11* pDeviceD3D11 = static_cast<xiiGALDeviceD3D11*>(m_pDevice);
 
-  // When switching to full screen mode, WM_SIZE is send to the window
-  // and Resize() is called before the new swap chain is created
+  // When switching to full screen mode, WM_SIZE is sent to the window and Resize() is called before the new swap chain is created.
   if (!m_pSwapChain)
     return XII_SUCCESS;
 
@@ -397,10 +422,13 @@ void xiiGALSwapChainD3D11::Present()
       pCommandList->CopyTexture(m_hBackBufferTexture, m_hActualBackBufferTexture);
 
       pQueue->Submit(pCommandList);
+      pQueue->WaitForIdle();
     }
   }
 
   xiiUInt32 uiSyncInterval = 1U;
+
+#if XII_DISABLED(XII_PLATFORM_WINDOWS_UWP)
   switch (m_PresentMode)
   {
     case xiiGALPresentMode::Immediate:
@@ -410,7 +438,17 @@ void xiiGALSwapChainD3D11::Present()
       uiSyncInterval = 1U;
       break;
   }
-  m_pSwapChain->Present(uiSyncInterval, 0);
+#endif
+
+  // We wait for the frame as late as possible - right before presenting.
+  // https://docs.microsoft.com/en-us/windows/uwp/gaming/reduce-latency-with-dxgi-1-3-swap-chains#step-4-wait-before-rendering-each-frame
+  WaitForFrame();
+
+  HRESULT hResult = m_pSwapChain->Present(uiSyncInterval, 0);
+  if (FAILED(hResult))
+  {
+    xiiLog::Error("Failed to present to swap chain: {}", xiiHRESULTtoString(hResult));
+  }
 }
 
 xiiResult xiiGALSwapChainD3D11::Resize(xiiSizeU32 newSize, xiiEnum<xiiGALSurfaceTransform> newTransform)
@@ -473,23 +511,45 @@ void xiiGALSwapChainD3D11::SetWindowedMode()
 
 void xiiGALSwapChainD3D11::SetMaximumFrameLatency(xiiUInt32 uiMaxLatency)
 {
+  if (m_uiMaximumFrameLatency == uiMaxLatency)
+    return;
+
   m_uiMaximumFrameLatency = uiMaxLatency;
 
-  xiiGALDeviceD3D11* pDeviceD3D11 = static_cast<xiiGALDeviceD3D11*>(m_pDevice);
-
-  IDXGIDevice1* pDXGIDevice = nullptr;
-  if (SUCCEEDED(pDeviceD3D11->GetD3D11Device()->QueryInterface(__uuidof(pDXGIDevice), reinterpret_cast<void**>(static_cast<IDXGIDevice1**>(&pDXGIDevice)))))
+  if (m_FrameLatencyWaitableObject != NULL)
   {
-    if (FAILED(pDXGIDevice->SetMaximumFrameLatency(m_uiMaximumFrameLatency)))
+    // A swap chain must be in windowed mode when it is released.
+    // https://msdn.microsoft.com/en-us/library/windows/desktop/bb205075(v=vs.85).aspx#Destroying
+    if (m_FullScreenMode.m_bIsFullScreen)
     {
-      xiiLog::Error("Failed to set the maximum frame latency for DXGI device.");
+      m_pSwapChain->SetFullscreenState(FALSE, nullptr);
+    }
+
+    // Destroying the swap chain and creating a new one is the only reliable way to change the maximum frame latency of a waitable swap chain.
+    UpdateSwapChain(true).AssertSuccess();
+  }
+}
+
+void xiiGALSwapChainD3D11::WaitForFrame()
+{
+  // https://docs.microsoft.com/en-us/windows/uwp/gaming/reduce-latency-with-dxgi-1-3-swap-chains#step-4-wait-before-rendering-each-frame
+  if (m_FrameLatencyWaitableObject != NULL)
+  {
+    // 0.5 second timeout (shouldn't ever occur)
+    DWORD uiResult = WaitForSingleObjectEx(m_FrameLatencyWaitableObject, 500, true);
+
+    if (uiResult != WAIT_OBJECT_0)
+    {
+      if (uiResult == WAIT_TIMEOUT)
+      {
+        xiiLog::Error("Timeout elapsed while waiting for the frame waitable object. This is a strong indication of a synchronization error.");
+      }
+      else
+      {
+        xiiLog::Error("Waiting for the frame waitable object failed. This is a strong indication of a synchronization error.");
+      }
     }
   }
-  else
-  {
-    xiiLog::Error("Failed to query IDXGIDevice1 interface from Direct3D11 device.");
-  }
-  XII_GAL_D3D11_RELEASE(pDXGIDevice);
 }
 
 XII_STATICLINK_FILE(GraphicsD3D11, GraphicsD3D11_Device_Implementation_SwapChainD3D11);

@@ -23,6 +23,8 @@ public:
 
   virtual void SetMaximumFrameLatency(xiiUInt32 uiMaxLatency) override final;
 
+  void WaitForFrame();
+
   IDXGISwapChain4* GetSwapChain() const;
 
 protected:
@@ -53,6 +55,8 @@ protected:
   xiiGALTextureHandle m_hActualBackBufferTexture;
 
   xiiGALFullScreenModeDescription m_FullScreenMode;
+
+  HANDLE m_FrameLatencyWaitableObject = NULL;
 
   xiiUInt32 m_uiMaximumFrameLatency = 0U;
 };
