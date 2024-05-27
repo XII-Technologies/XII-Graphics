@@ -5,6 +5,7 @@
 #include <GraphicsFoundation/Declarations/Descriptors.h>
 #include <GraphicsFoundation/Device/Device.h>
 #include <GraphicsFoundation/Resources/Buffer.h>
+#include <GraphicsFoundation/Resources/Texture.h>
 
 /// \brief Provides utility functions that are common with interfacing with the GAL device.
 class XII_GRAPHICSFOUNDATION_DLL xiiGALDeviceUtilities
@@ -18,6 +19,12 @@ public:
   };
 
   /// \brief Creates a vertex buffer with the given vertex size and vertex count.
+  ///
+  /// \param pDevice        - The device associated with the buffer.
+  /// \param uiVertexSize   - The size of a single vertex in the buffer.
+  /// \param uiVertexCount  - The number of vertices in the buffer.
+  /// \param pInitialData   - The initial data in bytes, that the buffer should contain after creation.
+  /// \param bDataIsMutable - Specifies whether the buffer should be considered immutable in its usage.
   static XII_NODISCARD XII_ALWAYS_INLINE xiiGALBufferHandle CreateVertexBuffer(xiiGALDevice* pDevice, xiiUInt32 uiVertexSize, xiiUInt32 uiVertexCount, xiiArrayPtr<xiiUInt8> pInitialData = xiiArrayPtr<xiiUInt8>(), bool bDataIsMutable = false)
   {
     XII_ASSERT_DEV(pDevice != nullptr, "Invalid device provided.");
@@ -39,6 +46,12 @@ public:
   }
 
   /// \brief Creates an index buffer with the given index type and index count.
+  ///
+  /// \param pDevice        - The device associated with the buffer.
+  /// \param indexType      - The index buffer type. See xiiGALDeviceUtilities::IndexType for details.
+  /// \param uiIndexCount   - The number of indices in the buffer.
+  /// \param pInitialData   - The initial data in bytes, that the buffer should contain after creation.
+  /// \param bDataIsMutable - Specifies whether the buffer should be considered immutable in its usage.
   static XII_NODISCARD XII_ALWAYS_INLINE xiiGALBufferHandle CreateIndexBuffer(xiiGALDevice* pDevice, IndexType indexType, xiiUInt32 uiIndexCount, xiiArrayPtr<xiiUInt8> pInitialData = xiiArrayPtr<xiiUInt8>(), bool bDataIsMutable = false)
   {
     XII_ASSERT_DEV(pDevice != nullptr, "Invalid device provided.");
@@ -50,6 +63,8 @@ public:
       uiIndexSize = sizeof(xiiUInt16);
     else if (indexType == IndexType::UInt)
       uiIndexSize = sizeof(xiiUInt32);
+
+    XII_ASSERT_DEV(uiIndexCount != 0U, "Implementation Error: Unexpected index size.");
 
     xiiGALBufferCreationDescription bufferDescription;
     bufferDescription.m_BindFlags           = xiiGALBindFlags::IndexBuffer;
@@ -66,6 +81,9 @@ public:
   }
 
   /// \brief Creates a constant buffer with the given size.
+  ///
+  /// \param  pDevice     - The device associated with the buffer.
+  /// \param uiBufferSize - The size of the buffer in bytes.
   static XII_NODISCARD XII_ALWAYS_INLINE xiiGALBufferHandle CreateConstantBuffer(xiiGALDevice* pDevice, xiiUInt32 uiBufferSize)
   {
     XII_ASSERT_DEV(pDevice != nullptr, "Invalid device provided.");
@@ -78,5 +96,25 @@ public:
     bufferDescription.m_CPUAccessFlags      = xiiGALCPUAccessFlag::Write;
 
     return pDevice->CreateBuffer(bufferDescription);
+  }
+
+  /// \brief Creates a render target description with the given paramters.
+  ///
+  /// \param size          - The size (width and height) of the render target.
+  /// \param format        - The render target format. See xiiGALTextureFormat for details.
+  /// \param uiSampleCount - The number of samples in the render target. The default is xiiGALMSAASampleCount::OneSample.
+  static XII_NODISCARD XII_ALWAYS_INLINE xiiGALTextureCreationDescription CreateRenderTargetDescription(xiiSizeU32 size, xiiGALTextureFormat::Enum format, xiiUInt32 uiSampleCount = xiiGALMSAASampleCount::OneSample)
+  {
+    return xiiGALTextureCreationDescription{
+      .m_Type               = xiiGALResourceDimension::Texture2D,
+      .m_Size               = size,
+      .m_uiArraySizeOrDepth = 1U,
+      .m_Format             = format,
+      .m_uiMipLevels        = 1U,
+      .m_uiSampleCount      = uiSampleCount,
+      .m_BindFlags          = xiiGALBindFlags::ShaderResource | (xiiGALTextureFormat::IsDepthFormat(format) ? xiiGALBindFlags::DepthStencil : xiiGALBindFlags::RenderTarget),
+      .m_Usage              = xiiGALResourceUsage::Default,
+      .m_MiscFlags          = xiiGALMiscTextureFlags::None,
+    };
   }
 };
