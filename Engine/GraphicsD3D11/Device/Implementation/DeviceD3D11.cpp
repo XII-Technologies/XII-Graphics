@@ -81,10 +81,12 @@ xiiResult xiiGALDeviceD3D11::InitializePlatform()
   // Enable the D3D11 debug layer.
   xiiUInt64 uiCreationFlags = 0U;
 
+#if XII_ENABLED(XII_COMPILE_FOR_DEVELOPMENT)
   if (m_Description.m_ValidationLevel != xiiGALDeviceValidationLevel::Disabled && HasSDKLayers())
   {
     uiCreationFlags |= D3D11_CREATE_DEVICE_DEBUG;
   }
+#endif
 
   XII_VERIFY_D3D11(SUCCEEDED(CreateDXGIFactory1(__uuidof(m_pDXGIFactory), reinterpret_cast<void**>(static_cast<IDXGIFactory5**>(&m_pDXGIFactory)))), "Failed to create IDXGIFactory5 DXGI factory. Error code '{}'.", xiiArgErrorCode(GetLastError()));
 
@@ -338,6 +340,8 @@ xiiResult xiiGALDeviceD3D11::CreateCommandQueuesPlatform()
         xiiStringBuilder sb;
         sb.SetFormat("Command Queue ({}) - {}", uiCommandQueueIndex, sName);
         m_CommandQueues[uiCommandQueueIndex]->SetDebugName(sb);
+
+        xiiLog::Info("Created {}", sb);
 
         return true;
       }

@@ -425,6 +425,7 @@ void xiiGALPipelineStateD3D11::ResetBoundResources()
     m_BoundConstantBuffersRange[uiStage].Reset();
 
     m_pBoundShaderResourceViews[uiStage].Clear();
+    m_ResourcesForResourceViews[uiStage].Clear();
     m_BoundShaderResourceViewsRange[uiStage].Reset();
 
     for (xiiUInt32 i = 0; i < XII_GAL_MAX_SAMPLER_COUNT; ++i)
@@ -432,9 +433,11 @@ void xiiGALPipelineStateD3D11::ResetBoundResources()
       m_pBoundSamplerStates[uiStage][i] = nullptr;
     }
     m_BoundSamplerStatesRange[uiStage].Reset();
-
-    m_pBoundShaders[uiStage] = nullptr;
   }
+
+  m_BoundUnoderedAccessViews.Clear();
+  m_ResourcesForUnorderedAccessViews.Clear();
+  m_BoundUnoderedAccessViewsRange.Reset();
 }
 
 XII_STATICLINK_FILE(GraphicsD3D11, GraphicsD3D11_States_Implementation_PipelineStateD3D11);
